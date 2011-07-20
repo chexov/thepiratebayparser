@@ -6,12 +6,16 @@ import sys
 
 TPB_SEARCH_URL="http://thepiratebay.org/search"
 
+class NoResultsException(Exception):
+    pass
+
+
 def search(q, category):
     url = "%s/%s/%s" % (TPB_SEARCH_URL, q, category)
     tree = lxml.html.parse(url)
     table = tree.xpath('//table[@id="searchResult"]')
     if not table:
-        raise ValueError(u"No search results")
+        raise NoResultsException(u"No search results")
     for el_tr in table[0].xpath('tr'):
         yield {'torrent': el_tr.xpath('td[2]/a[1]/@href')[0],
                'seeders': el_tr.xpath('td[3]/text()')[0],
