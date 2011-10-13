@@ -8,7 +8,6 @@ __website__ = 'https://github.com/chexov/thepiratebayparser'
 
 import sys
 import time
-import utils
 
 import feedparser
 
