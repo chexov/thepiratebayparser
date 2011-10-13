@@ -2,14 +2,26 @@
 # encoding: utf-8
 
 import lxml.html
+import urllib
+import urllib2
 import sys
+
+class HTMLDesignError(Exception): pass
 
 TPB_SEARCH_URL="http://thepiratebay.org/search"
 
 def search(q, category):
-    url = "%s/%s/%s" % (TPB_SEARCH_URL, q, category)
-    tree = lxml.html.parse(url)
-    table = tree.xpath('//table[@id="searchResult"]')
+    uri = urllib.quote("%s/%s" % (q, category))
+    url = "%s/%s" % (TPB_SEARCH_URL, uri)
+    # Retriving the HTML from url
+    html = urllib2.urlopen(url).read()
+
+    root = lxml.html.fromstring(html)
+    try:
+        table = root.xpath('//table[@id="searchResult"]')
+    except AssertionError:
+        raise HTMLDesignError(u"The PirateBay site changed HTML desing. Please ping the author: %s" %(url))
+
     if not table:
         raise ValueError(u"No search results")
     for el_tr in table[0].xpath('tr'):
