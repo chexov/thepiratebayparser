@@ -1,11 +1,17 @@
 #!/usr/bin/env python
 # coding: utf-8
+#
+__author__ = 'Anton P. Linevich'
+__title__ = 'thepiratebayparser.search'
+__copyright__ = 'BSD Licence code. Enjoy and contribute'
+__website__ = 'https://github.com/chexov/thepiratebayparser'
 
 import sys
 import time
 import utils
 
 import feedparser
+
 
 def titles_by_url(url, last_updated=None):
     """
