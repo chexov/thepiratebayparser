@@ -40,6 +40,8 @@ def titles_by_url(url, last_updated=None):
 if __name__ == "__main__":
     # XXX: test function
     import pprint
-    url = 'http://rss.thepiratebay.org/user/d17c6a45441ce0bc0c057f19057f95e1'
-    pprint.pprint(list(titles_by_url(url)))
+
+    #url = 'http://rss.thepiratebay.org/user/d17c6a45441ce0bc0c057f19057f95e1'
+    for url in sys.argv[1:]:
+        pprint.pprint(list(titles_by_url(url)))
 

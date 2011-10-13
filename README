@@ -1,4 +1,7 @@
-$python search.py '"Black Books"'
+SEARCH REQUEST
+**************
+
+python search.py '"Black Books"'
 92  58  http://torrents.thepiratebay.org/5053045/Black_Books_Complete_Collection_1_-_3_(physixmaster).5053045.TPB.torrent
 6   5   http://torrents.thepiratebay.org/3752517/Black_Books_-_Complete_Series_[DVD].3752517.TPB.torrent
 6   2   http://torrents.thepiratebay.org/5440394/Black_Books_complete_series_(HQ_HiRes_DVDRip).5440394.TPB.torrent
@@ -16,5 +19,41 @@ $python search.py '"Black Books"'
 0   1   http://torrents.thepiratebay.org/3806568/Black_Books_S1_-_Outakes_[RavyDavy].avi.3806568.TPB.torrent
 0   2   http://torrents.thepiratebay.org/3268531/black.books.s01e04.ws.dvdrip.internal.xvid-omicron.3268531.TPB.torrent
 0   1   http://torrents.thepiratebay.org/5713714/Black_Books_Season2_(XviD_asd)_EnglishV_NapisyPL.5713714.TPB.torrent
+
+
+RSS REQUEST
+***********
+
+python rss.py 'http://rss.thepiratebay.org/user/d17c6a45441ce0bc0c057f19057f95e1'
+[{'new': True,
+  'title': u'The Ultimate Fighter S14E05 HDTV XviD-aAF [eztv]',
+  'url': u'http://torrents.thepiratebay.org/6740475/The_Ultimate_Fighter_S14E05_HDTV_XviD-aAF_[eztv].6740475.TPB.torrent'},
+ {'new': True,
+  'title': u'Penn and Teller Tell a Lie S01E02 HDTV XviD-MOMENTUM [eztv]',
+  'url': u'http://torrents.thepiratebay.org/6740436/Penn_and_Teller_Tell_a_Lie_S01E02_HDTV_XviD-MOMENTUM_[eztv].6740436.TPB.torrent'},
+ {'new': True,
+  'title': u'Blue Mountain State S03E05 Training Day HDTV XviD-FQM [eztv]',
+  'url': u'http://torrents.thepiratebay.org/6740425/Blue_Mountain_State_S03E05_Training_Day_HDTV_XviD-FQM_[eztv].6740425.TPB.torrent'},
+ {'new': True,
+  'title': u'Conan 2011 10 11 Will Arnett HDTV XviD-W4F [eztv]',
+  'url': u'http://torrents.thepiratebay.org/6740423/Conan_2011_10_11_Will_Arnett_HDTV_XviD-W4F_[eztv].6740423.TPB.torrent'},
+ {'new': True,
+  'title': u'Psych S06E01 Shawn Rescues Darth Vader HDTV XviD-FQM [eztv]',
+  'url': u'http://torrents.thepiratebay.org/6740407/Psych_S06E01_Shawn_Rescues_Darth_Vader_HDTV_XviD-FQM_[eztv].6740407.TPB.torrent'},
+ {'new': True,
+  'title': u'Spicks And Specks 2011 10 12 WS PDTV XviD-TASTETV [eztv]',
+  'url': u'http://torrents.thepiratebay.org/6740387/Spicks_And_Specks_2011_10_12_WS_PDTV_XviD-TASTETV_[eztv].6740387.TPB.torrent'},
+ {'new': True,
+  'title': u'MythBusters S09E15 Walk a Straight Line HDTV XviD-FQM [eztv]',
+  'url': u'http://torrents.thepiratebay.org/6740373/MythBusters_S09E15_Walk_a_Straight_Line_HDTV_XviD-FQM_[eztv].6740373.TPB.torrent'},
+ {'new': True,
+  'title': u'Survivor S23E05 Taste the Victory HDTV XviD-FQM [eztv]',
+  'url': u'http://torrents.thepiratebay.org/6740365/Survivor_S23E05_Taste_the_Victory_HDTV_XviD-FQM_[eztv].6740365.TPB.torrent'},
+ {'new': True,
+  'title': u'South Park S15E09 HDTV XviD-ASAP [eztv]',
+  'url': u'http://torrents.thepiratebay.org/6740346/South_Park_S15E09_HDTV_XviD-ASAP_[eztv].6740346.TPB.torrent'},
+ {'new': True,
+  'title': u'Harrys Law S02E04 HDTV XviD-LOL [eztv]',
+  'url': u'http://torrents.thepiratebay.org/6740334/Harrys_Law_S02E04_HDTV_XviD-LOL_[eztv].6740334.TPB.torrent'}]
 
 
