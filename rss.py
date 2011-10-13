@@ -8,6 +8,7 @@ __website__ = 'https://github.com/chexov/thepiratebayparser'
 
 import sys
 import time
+import datetime
 
 import feedparser
 
@@ -15,6 +16,8 @@ import feedparser
 def titles_by_url(url, last_updated=None):
     """
     titles_by_url("http://rss.thepiratebay.org/user/d17c6a45441ce0bc0c057f19057f95e1")
+    `last_updated` should be datetime.datetime object
+
 
     returns:
         [{'new': True,
@@ -28,7 +31,11 @@ def titles_by_url(url, last_updated=None):
           'url': u'http://torrents.thepiratebay.org/6740425/Blue_Mountain_State_S03E05_Training_Day_HDTV_XviD-FQM_[eztv].6740425.TPB.torrent'},
         ]
     """
+    if not isinstance(last_updated, datetime.datetime):
+        raise ValueError("last_updated value should be datetime.datetime object not {0}".format(type(last_updated)) )
+
     feed = feedparser.parse(url)
+    feed_updated = datetime.datetime.fromtimestamp(time.mktime(feed.updated))
 
     for entry in feed.entries:
         title = entry.title
@@ -39,7 +46,7 @@ def titles_by_url(url, last_updated=None):
         if len(r) >= 1:
             torrent_url = r[0].href
 
-        yield dict(title=title, url=torrent_url, new=(entry.updated > last_updated))
+        yield dict(title=title, url=torrent_url, new=(feed_updated > last_updated))
 
 
 if __name__ == "__main__":
@@ -48,5 +55,5 @@ if __name__ == "__main__":
 
     #url = 'http://rss.thepiratebay.org/user/d17c6a45441ce0bc0c057f19057f95e1'
     for url in sys.argv[1:]:
-        pprint.pprint(list(titles_by_url(url)))
+        pprint.pprint(list(titles_by_url(url, datetime.datetime.today())))
 
