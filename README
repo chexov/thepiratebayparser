@@ -1,4 +1,4 @@
-$python thepiratebayorg.py '"Black Books"'
+$python search.py '"Black Books"'
 92  58  http://torrents.thepiratebay.org/5053045/Black_Books_Complete_Collection_1_-_3_(physixmaster).5053045.TPB.torrent
 6   5   http://torrents.thepiratebay.org/3752517/Black_Books_-_Complete_Series_[DVD].3752517.TPB.torrent
 6   2   http://torrents.thepiratebay.org/5440394/Black_Books_complete_series_(HQ_HiRes_DVDRip).5440394.TPB.torrent
