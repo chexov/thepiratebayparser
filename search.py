@@ -19,6 +19,10 @@ class HTMLDesignError(Exception):
     pass
 
 
+class NoResults(Exception):
+    pass
+
+
 def user(user, page=0):
     return search('user', "{user}/{page}/3".format(user=user, page=page), 'http://thepiratebay.org')
 
@@ -38,7 +42,7 @@ def search(q, category, search_url=TPB_SEARCH_URL):
         raise HTMLDesignError("The PirateBay site changed HTML desing. Please ping the author: {0}".format(url))
 
     if not table:
-        raise ValueError("No search results")
+        raise NoResults()
     for el_tr in table[0].xpath('tr'):
         title = el_tr.xpath('td[2]/div[1]/a[1]/text()')
 
