@@ -19,10 +19,20 @@ class HTMLDesignError(Exception):
     pass
 
 
-def search(q, category):
+class NoResults(Exception):
+    pass
+
+
+def user(user, page=0):
+    return search('user', "{user}/{page}/3".format(user=user, page=page), 'http://thepiratebay.org')
+
+
+def search(q, category, search_url=TPB_SEARCH_URL):
     uri = urllib.quote("%s/%s" % (q, category))
-    url = "%s/%s" % (TPB_SEARCH_URL, uri)
-    # Retriving the HTML from url
+    url = "%s/%s" % (search_url, uri)
+
+    # Retriving HTML from the url
+    print url
     html = urllib2.urlopen(url).read()
 
     root = lxml.html.fromstring(html)
@@ -32,14 +42,20 @@ def search(q, category):
         raise HTMLDesignError("The PirateBay site changed HTML desing. Please ping the author: {0}".format(url))
 
     if not table:
-        raise ValueError("No search results")
+        raise NoResults()
     for el_tr in table[0].xpath('tr'):
-        description = unicode(el_tr.xpath('td[2]/font[@class="detDesc"]/text()')[0]).encode('utf-8')
-        yield {'torrent': el_tr.xpath('td[2]/a[1]/@href')[0],
-               'seeders': el_tr.xpath('td[3]/text()')[0],
-               'leachers': el_tr.xpath('td[4]/text()')[0],
-               'description': unicode(el_tr.xpath('td[2]/font[@class="detDesc"]/text()')[0]).encode('utf-8'),
-               }
+        title = el_tr.xpath('td[2]/div[1]/a[1]/text()')
+
+        if title:
+            description = el_tr.xpath('td[2]/font[@class="detDesc"]/text()')[0]
+            yield {
+                   'title': title[0],
+                   'url': el_tr.xpath('td[2]/a[1]/@href')[0],
+                   'seeders': el_tr.xpath('td[3]/text()')[0],
+                   'leachers': el_tr.xpath('td[4]/text()')[0],
+                   'description': description,
+                   'new': True,
+                   }
 
 
 if __name__ == "__main__":
@@ -48,6 +64,6 @@ if __name__ == "__main__":
             se=row['seeders'],
             le=row['leachers'],
             desc=row['description'],
-            url=unicode(row['torrent']))
+            url=unicode(row['url']))
         )
 

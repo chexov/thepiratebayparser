@@ -46,7 +46,7 @@ def titles_by_url(url, last_updated=None):
         if len(r) >= 1:
             torrent_url = r[0].href
 
-        yield dict(title=title, url=torrent_url, new=(feed_updated > last_updated))
+        yield dict(title=title, url=torrent_url, last_updated=last_updated, new=(feed_updated > last_updated))
 
 
 if __name__ == "__main__":
