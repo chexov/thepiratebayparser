@@ -7,12 +7,13 @@ __copyright__ = 'BSD Licence code. Enjoy and contribute'
 __website__ = 'https://github.com/chexov/thepiratebayparser'
 
 import lxml.html
+import lxml.etree
 import urllib
 import urllib2
 import sys
 
 
-TPB_SEARCH_URL = "http://thepiratebay.org/search"
+TPB_SEARCH_URL = "http://thepiratebay.se/search"
 
 
 class HTMLDesignError(Exception):
@@ -24,7 +25,7 @@ class NoResults(Exception):
 
 
 def user(user, page=0):
-    return search('user', "{user}/{page}/3".format(user=user, page=page), 'http://thepiratebay.org')
+    return search('user', "{user}/{page}/3".format(user=user, page=page), 'http://thepiratebay.se')
 
 
 def search(q, category, search_url=TPB_SEARCH_URL):
@@ -39,10 +40,10 @@ def search(q, category, search_url=TPB_SEARCH_URL):
     try:
         table = root.xpath('//table[@id="searchResult"]')
     except AssertionError:
-        raise HTMLDesignError("The PirateBay site changed HTML desing. Please ping the author: {0}".format(url))
+        raise HTMLDesignError("The PirateBay site changed HTML layout. Please ping the module author with this url: {0}".format(url))
 
     if not table:
-        raise NoResults()
+        raise NoResults(html)
     for el_tr in table[0].xpath('tr'):
         title = el_tr.xpath('td[2]/div[1]/a[1]/text()')
 

@@ -41,10 +41,13 @@ def titles_by_url(url, last_updated=None):
         title = entry.title
 
         # XXX: extracting x-bittorrent link. quickhack
-        r = filter(lambda i: i.type == u'application/x-bittorrent', entry.links)
-        torrent_url = None
-        if len(r) >= 1:
-            torrent_url = r[0].href
+        #r = filter(lambda i: i.type == u'application/x-bittorrent', entry.links)
+        #torrent_url = None
+        #if len(r) >= 1:
+        #    torrent_url = r[0].href
+        #else:
+        #    raise ValueError(u"Can not find valid link %s" % entry.links)
+        torrent_url = entry.links[0].href
 
         yield dict(title=title, url=torrent_url, last_updated=last_updated, new=(feed_updated > last_updated))
 
