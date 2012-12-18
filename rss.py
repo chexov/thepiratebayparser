@@ -11,9 +11,10 @@ import time
 import datetime
 
 import feedparser
+feedparser.USER_AGENT = "Mozilla/5.0"
 
 
-def titles_by_url(url, last_updated=None):
+def titles_by_url(url_or_xml, last_updated=None):
     """
     titles_by_url("http://rss.thepiratebay.org/user/d17c6a45441ce0bc0c057f19057f95e1")
     `last_updated` should be datetime.datetime object
@@ -34,17 +35,35 @@ def titles_by_url(url, last_updated=None):
     if not isinstance(last_updated, datetime.datetime):
         raise ValueError("last_updated value should be datetime.datetime object not {0}".format(type(last_updated)) )
 
-    feed = feedparser.parse(url)
-    feed_updated = datetime.datetime.fromtimestamp(time.mktime(feed.updated))
+    tries = 0
+    while tries < 5:
+        feed = feedparser.parse(url_or_xml, agent='Mozilla/5.0')
+        print feed.get('updated')
+        if not feed.get('updated'):
+            print "Error getting RSS XML"
+            print "Retyring..."
+        else:
+            print "OK"
+            break
+        tries = tries + 1
+        time.sleep(tries+2)
+
+    #feed_updated = datetime.datetime.fromtimestamp(time.mktime(feed.get('updated')))
+    feed_updated = datetime.datetime.fromtimestamp(
+        time.mktime(time.strptime(feed.get('updated'),"%a, %d %b %Y %H:%M:%S %Z"))
+    ) #"Tue, 17 Jul 2012 13:35:03 GMT"
 
     for entry in feed.entries:
         title = entry.title
 
         # XXX: extracting x-bittorrent link. quickhack
-        r = filter(lambda i: i.type == u'application/x-bittorrent', entry.links)
-        torrent_url = None
-        if len(r) >= 1:
-            torrent_url = r[0].href
+        #r = filter(lambda i: i.type == u'application/x-bittorrent', entry.links)
+        #torrent_url = None
+        #if len(r) >= 1:
+        #    torrent_url = r[0].href
+        #else:
+        #    raise ValueError(u"Can not find valid link %s" % entry.links)
+        torrent_url = entry.links[0].href
 
         yield dict(title=title, url=torrent_url, last_updated=last_updated, new=(feed_updated > last_updated))
 
