@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # encoding: utf-8
 #
 __author__ = 'Anton P. Linevich'
@@ -6,12 +6,11 @@ __title__ = 'thepiratebayparser.search'
 __copyright__ = 'BSD Licence code. Enjoy and contribute'
 __website__ = 'https://github.com/chexov/thepiratebayparser'
 
-import urllib
-import urllib.request
-import sys
-
 import lxml.html
 import lxml.etree
+import urllib
+import urllib2
+import sys
 
 
 TPB_SEARCH_URL = "http://thepiratebay.se/search"
@@ -30,13 +29,14 @@ def user(user, page=0):
 
 
 def search(q, category, search_url=TPB_SEARCH_URL):
-    uri = urllib.request.quote("%s/%s" % (q, category))
+    uri = urllib.quote("%s/%s" % (q, category))
     url = "%s/%s" % (search_url, uri)
 
-    print ("Retrieving HTML from the url", url)
-    html = urllib.request.urlopen(url).read()
+    # Retriving HTML from the url
+    print url
+    html = urllib2.urlopen(url).read()
 
-    root = lxml.html.fromstring(html.decode())
+    root = lxml.html.fromstring(html)
     try:
         table = root.xpath('//table[@id="searchResult"]')
     except AssertionError:
@@ -61,10 +61,10 @@ def search(q, category, search_url=TPB_SEARCH_URL):
 
 if __name__ == "__main__":
     for row in search(sys.argv[1], '0/7/0'):
-        print ("{se:>3} {le:>3} {desc} %{url}s".format(
+        print ("{se:>3} {le:>3} {desc} {url}".format(
             se=row['seeders'],
             le=row['leachers'],
             desc=row['description'],
-            url=(row['url'])
-        ))
+            url=unicode(row['url']))
+        )
 
