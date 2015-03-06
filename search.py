@@ -15,6 +15,9 @@ import sys
 
 TPB_SEARCH_URL = "http://thepiratebay.se/search"
 
+OPENER = urllib2.build_opener()
+OPENER.addheaders = [('User-agent', 'Mozilla/5.0')]
+
 
 class HTMLDesignError(Exception):
     pass
@@ -33,8 +36,10 @@ def search(q, category, search_url=TPB_SEARCH_URL):
     url = "%s/%s" % (search_url, uri)
 
     # Retriving HTML from the url
-    print url
-    html = urllib2.urlopen(url).read()
+    print (url)
+
+    #html = urllib2.urlopen(url).read()
+    html = OPENER.open(url).read()
 
     root = lxml.html.fromstring(html)
     try:
@@ -61,7 +66,7 @@ def search(q, category, search_url=TPB_SEARCH_URL):
 
 if __name__ == "__main__":
     for row in search(sys.argv[1], '0/7/0'):
-        print ("{se:>3} {le:>3} {desc} {url}".format(
+        print (u"{se:>3} {le:>3} {desc} {url}".format(
             se=row['seeders'],
             le=row['leachers'],
             desc=row['description'],

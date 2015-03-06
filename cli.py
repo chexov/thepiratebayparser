@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-import thepiratebayparser.search
+import thepiratebayparser
 import piutils
 import sys
 
